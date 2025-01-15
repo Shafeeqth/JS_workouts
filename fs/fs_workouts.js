@@ -1,4 +1,4 @@
-const { writeFile, open, read, readFile, appendFile, unlink, appendFileSync, mkdir, rename, createWriteStream, createReadStream, stat } = require("node:fs");
+const { writeFile, open, read, readFile, appendFile, unlink, appendFileSync, mkdir, rename, createWriteStream, createReadStream, stat, readdir } = require("node:fs");
 const { Buffer } = require('node:buffer');
 const path = require("node:path");
 
@@ -62,10 +62,13 @@ rename('main.txt', './demo/main.txt', (err) => {
     console.error(err);
 })
 
-readSteam = createReadStream('./demo/main.txt', { highWaterMark: 20, encoding: "utf-8" });
+const readSteam = createReadStream('./demo/main.txt', { highWaterMark: 20, encoding: "utf-8" });
 readSteam.on('data', (chunk) => {
     console.log(chunk)
 })
+
+const writeStream = createWriteStream("./logs.log", { encoding: "utf-8" });
+
 
 readSteam.pipe(createWriteStream('output.txt', { flags: 'w' }));
 stat('./date.js', (err, info) => {
@@ -76,5 +79,10 @@ stat('./date.js', (err, info) => {
     console.dir(info.isFile())
 })
 
-console.log(process.env.PORT);
+readdir("../", { recursive: true, encoding: "utf-8" }, (err, files) => {
+    // console.dir(files);
+    files.forEach((data) => {
+        writeStream.write(data + "\n", (dat) => console.table(dat));
+    })
+})
 
