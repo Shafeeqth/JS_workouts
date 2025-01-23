@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        console.log(typeof button)
+        console.log("hello")
+        import("user.js").then((result) => console.log).catch(err => console.error);
+        import user from  `${button}`;
+        import * as user from "name.js";
+        import name from "name.js"; // base import (name.js not "./name.js")-> not supported by browsers but widely used with module bundlers like -> webpack, rollup, Vite..
+        import * as name from "name.js";
+        import {name, id, address} from "name.js";
+
+        import {default as user , id} from "name.js";
+        export {default as name  } from "user.js";
+
+        user.default;
+
+        export default function(){}
+        export function name() {}
+
+        export {name as default, name}
+
+    </script>
+    <script async > console.log("Async non-module script");</script>
+    <script>
+        console.log(typeof button);
+        console.log("World");
+    </script>
+
+
+
+    <h1>Hello world</h1>
+    <button id="button">Button </button>
+    
+</body>
+</html>
